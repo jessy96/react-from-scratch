@@ -1,0 +1,34 @@
+{
+  "name": "react-from-scratch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "cross-env NODE_ENV=development npx webpack-dev-server",
+    "start:prod": "cross-env NODE_ENV=production npx webpack-dev-server",
+    "build:prod": "cross-env NODE_ENV=production npx webpack",
+    "build:dev": "cross-env NODE_ENV=development npx webpack",
+    "code:check": "npx eslint --ext .js ./src",
+    "code:fix": "npx eslint --fix --ext .js ./src"
+  },
+  "author": "Olesia Serban",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/eslint-parser": "^7.16.3",
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-react": "^7.16.0",
+    "babel-loader": "^8.2.3",
+    "eslint": "^8.3.0",
+    "eslint-plugin-react": "^7.27.1",
+    "eslint-webpack-plugin": "^3.1.1",
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.64.2",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.5.0"
+  }
+}
