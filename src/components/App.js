@@ -1,11 +1,20 @@
+import "./styles.css";
 import React, { Component } from 'react';
+import Header from './Header';
+import Main from '../containers/Main';
+import Footer from './Footer';
+import ErrorBoundary from "../containers/ErrorBoundary";
 
 class App extends Component {
     render() {
         return ( 
-            <div>
-                <h1>My React App!</h1>
-            </div>
+            <>
+                <Header/>
+                <ErrorBoundary>
+                    <Main/>
+                </ErrorBoundary>
+                <Footer/>
+            </>
         )
     }
 }
