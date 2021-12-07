@@ -1,0 +1,25 @@
+.movie-card{
+    color: rgb(207, 207, 207);
+    margin-bottom: 2em;
+    width: 20em;
+}
+.movie-card-info{
+    margin-top: 1em;
+}
+
+.movie-card-genres{
+    font-size: 0.8em;
+}
+
+.movie-card-year{
+    position: relative;
+    left: 16.9em;
+    top: -2em;
+    border-style: solid;
+    border-width: 1px;
+    border-color: gray;
+    border-radius: 3px;
+    width: min-content;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+}

@@ -1,0 +1,26 @@
+
+main {
+    background-color: rgba(50, 50, 50);
+}
+
+.result {
+    display: flex;
+    /* column-gap: 45%; */
+    justify-content: space-between;
+    padding-bottom: 0.74em;
+    border-bottom: rgb(24, 24, 24);;
+    border-bottom-style: solid;
+    border-bottom-width: 0.25em;
+    margin-left: 0.8em;
+    margin-right: 0.8em;
+    font-size: 1.02em;
+}
+
+.movies{
+    margin-top: 2em;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 5em;
+    align-items: center;
+    justify-content: center;
+}
