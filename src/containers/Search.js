@@ -1,8 +1,12 @@
 import "./Search.css";
 import React, {useState} from "react";
 
-export default function Search(props){
+export default function Search (props) {
     const [searchInput, setSearchInput] = useState('What do you want to watch?');
+    const onSubmit = (event, searchInput)=>{
+        console.log(searchInput);
+        event.preventDefault();
+    };
 
     return (
       <div className='search-form'>
@@ -19,9 +23,4 @@ export default function Search(props){
         </form>
       </div>
     );
-}
-
-function onSubmit(event, searchInput) {
-    console.log(searchInput);
-    event.preventDefault();
 }
