@@ -1,0 +1,10 @@
+.result-sort option {
+    background-color: rgba(50, 50, 50);
+    color: white;
+    border: none;
+    outline: none;
+}
+
+.result-sort{
+    margin-right: 5%;
+}

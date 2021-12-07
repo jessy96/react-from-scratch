@@ -1,3 +1,4 @@
+import "./ResultsFilter.css";
 import React from "react";
 import { getFirstGenres } from "../services/GenreService";
 

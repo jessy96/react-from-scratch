@@ -1,6 +1,7 @@
 import React from "react";
 import { getFirstMovies } from "../services/MovieService";
 import MovieCard from "../components/MovieCard";
+import "./Main.css";
 import ResultsFilter from "./ResultsFilter";
 import ResultsSort from "./ResultsSort";
 

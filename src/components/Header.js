@@ -1,3 +1,4 @@
+import "./Header.css";
 import React from "react";
 import Search from "../containers/Search";
 
