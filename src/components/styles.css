@@ -9,10 +9,23 @@
     outline: none;
 }
 
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
 .error {
     text-align: center;
 }
 
 .search-btn:hover, .add-movie-btn:hover, .search-input:hover, select:hover {
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  }
+
+  .display-block {
+    display: block;
+  }
+  
+  .display-none {
+    display: none;
   }

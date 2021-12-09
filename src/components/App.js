@@ -1,6 +1,6 @@
 import "./styles.css";
 import React, { Component } from 'react';
-import Header from './Header';
+import Header from '../containers/Header';
 import Main from '../containers/Main';
 import Footer from './Footer';
 import ErrorBoundary from "../containers/ErrorBoundary";
