@@ -91,3 +91,30 @@ export function getAllMovies(){
 export function getFirstMovies(size){
     return movies.slice(0, size);
 }
+
+export function updateMovie(newMovie){
+    const existingMovieIndex = findIndex(newMovie);
+
+    movies[existingMovieIndex].name = newMovie.name;
+    movies[existingMovieIndex].genres = newMovie.genres;
+    movies[existingMovieIndex].url = newMovie.url;
+    movies[existingMovieIndex].rating = newMovie.rating;
+    movies[existingMovieIndex].runtime = newMovie.runtime;
+    movies[existingMovieIndex].overview = newMovie.overview;
+
+}
+
+export function addMovie(newMovie){
+    const id = "id" + Math.random().toString(16).slice(2);
+    newMovie.id = id;
+    movies.push(newMovie);
+}
+
+export function deleteMovie(movie){
+    const existingMovieIndex = findIndex(movie);
+    movies.splice(existingMovieIndex, 1);
+}
+
+function findIndex(newMovie){
+    return movies.findIndex((movie => movie.id == newMovie.id));
+}

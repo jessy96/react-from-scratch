@@ -20,7 +20,7 @@ export default function Header(){
             <button className="add-movie-btn" onClick={openModel}>+ ADD MOVIE</button>
             <Suspense fallback={<div className="error">Loading...</div>}>
                 <Modal show={showCreateMovieModal} handleClose={handleClose}>
-                    <UpsertMovieModal header="ADD MOVIE"/>
+                    <UpsertMovieModal header="ADD MOVIE" handleCloseModal={handleClose}/>
                 </Modal>
             </Suspense>
             

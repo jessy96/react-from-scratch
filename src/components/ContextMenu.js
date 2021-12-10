@@ -34,7 +34,7 @@ export default function ContextMenu ({show, handleClose, anchorPoint, movie}){
             </div>
             <Suspense fallback={<div className="error">Loading...</div>}>
                 <Modal show={showEditMovieModal} handleClose={()=>{setShowEditMovieModal(false)}}>
-                    <UpsertMovieModal header="EDIT MOVIE" movie={movie}/>
+                    <UpsertMovieModal header="EDIT MOVIE" movie={movie} handleCloseModal={()=>{setShowEditMovieModal(false)}}/>
                 </Modal>
             </Suspense>
         </>
