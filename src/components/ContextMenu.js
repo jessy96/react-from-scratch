@@ -1,5 +1,5 @@
 import "./ContextMenu.css";
-import React, {useEffect, useState, useCallback, Suspense} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 
 const UpsertMovieModal = React.lazy(()=> import("../components/UpsertMovieModal"));
 const Modal = React.lazy(() => import("../components/Modal"));
@@ -32,11 +32,9 @@ export default function ContextMenu ({show, handleClose, anchorPoint, movie}){
                     <button>DELETE</button>
                 </div>
             </div>
-            <Suspense fallback={<div className="error">Loading...</div>}>
-                <Modal show={showEditMovieModal} handleClose={()=>{setShowEditMovieModal(false)}}>
-                    <UpsertMovieModal header="EDIT MOVIE" movie={movie} handleCloseModal={()=>{setShowEditMovieModal(false)}}/>
-                </Modal>
-            </Suspense>
+            <Modal show={showEditMovieModal} handleClose={()=>{setShowEditMovieModal(false)}}>
+                <UpsertMovieModal header="EDIT MOVIE" movie={movie} handleCloseModal={()=>{setShowEditMovieModal(false)}}/>
+            </Modal>
         </>
     );
 }

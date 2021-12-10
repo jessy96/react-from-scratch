@@ -1,7 +1,9 @@
 import "./MovieCard.css";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState, Suspense} from "react";
 import PropTypes from "prop-types";
-import ContextMenu from "./ContextMenu";
+
+const ContextMenu = React.lazy(()=> import("./ContextMenu"));
+
 
 const  MovieCard = function(props){
     const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
@@ -39,11 +41,13 @@ const  MovieCard = function(props){
                     <div className="movie-card-year">{movie.year}</div>
                 </div>
             </div>
-            <ContextMenu show={showContextMenu} 
-                handleClose={closeContextMenu} 
-                anchorPoint={anchorPoint}
-                movie={movie}
-                />
+            <Suspense fallback={<div className="error">Loading...</div>}>
+                <ContextMenu show={showContextMenu} 
+                    handleClose={closeContextMenu} 
+                    anchorPoint={anchorPoint}
+                    movie={movie}
+                    />
+            </Suspense>
         </>
     )
 }

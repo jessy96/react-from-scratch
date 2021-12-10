@@ -1,11 +1,14 @@
 import "./UpsertMovieModal.css";
-import React from "react";
+import React, {useContext} from "react";
 import { useForm } from "react-hook-form";
-import { addMovie, getAllMovies, updateMovie } from "../services/MovieService";
+import MoviesContext, { MovieRepo } from "../services/MoviesContext";
 
 
 
 export default function UpsertMovieModal({header, movie, handleCloseModal}){
+    let contextValue = useContext(MoviesContext);
+    
+    const movieRepo = contextValue.movieRepo;
      
     const { register, handleSubmit } = useForm();
     const onSubmit = (data, e) => {
@@ -15,7 +18,9 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
             handleUpdate(movie, data);
         }
 
-        console.log(getAllMovies());
+        console.log(contextValue);
+
+        contextValue.setMovieRepo(movieRepo.clone());
         handleCloseModal();
     };
     const onError = (errors, e) => console.log(errors, e);
@@ -43,7 +48,7 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
             movie.overview = formData.overview;
         }
 
-        updateMovie(movie);
+        movieRepo.updateMovie(movie);
     };
 
 
@@ -55,7 +60,7 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
         newMovie.rating = formData.rating;
         newMovie.runtime = formData.runtime;
         newMovie.overview = formData.overview;
-        addMovie(newMovie);      
+        movieRepo.addMovie(newMovie);
     };
 
     const defaultFormData = {
