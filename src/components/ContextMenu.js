@@ -1,7 +1,7 @@
 import "./ContextMenu.css";
 import React, {useEffect, useState, useCallback} from "react";
 
-const UpsertMovieModal = React.lazy(()=> import("../components/UpsertMovieModal"));
+const UpsertMovieModal = React.lazy(()=> import("./UpsertMovieModal"));
 const Modal = React.lazy(() => import("../components/Modal"));
 
 export default function ContextMenu ({show, handleClose, anchorPoint, movie}){

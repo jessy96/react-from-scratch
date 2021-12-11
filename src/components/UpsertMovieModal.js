@@ -2,12 +2,14 @@ import "./UpsertMovieModal.css";
 import React, {useContext} from "react";
 import { useForm } from "react-hook-form";
 import MoviesContext, { MovieRepo } from "../services/MoviesContext";
-
+import GenresRepo from "../services/GenreRepo";
 
 
 export default function UpsertMovieModal({header, movie, handleCloseModal}){
     let contextValue = useContext(MoviesContext);
-    
+    const genreRepo = new GenresRepo();
+    const genres = genreRepo.getAllGenres();
+
     const movieRepo = contextValue.movieRepo;
      
     const { register, handleSubmit } = useForm();
@@ -94,8 +96,9 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
                 <div className="col1-2 row3 form-input">
                 	<label>GENRE</label>
                     <select {...register("genre")} name="genre">
-                        <option>Action</option>
-                        <option>Drama</option>
+                        {genres.map((genre) =>
+                            <option key={genre.id}>{genre.name}</option>
+                        )}
                     </select>
                 </div>
                 

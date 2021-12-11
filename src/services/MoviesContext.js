@@ -133,4 +133,13 @@ export class MovieRepo {
         return clone;
     }
 
+    sort(option){
+        let compare = (a,b) => a.name.localeCompare(b.name);
+        if(option === "RELEASE DATE"){
+            compare = (a,b)=>{return parseInt(a.year) - parseInt(b.year)};
+        }
+        this.movies.sort(compare);
+        console.log(this.movies);
+    }
+
 }

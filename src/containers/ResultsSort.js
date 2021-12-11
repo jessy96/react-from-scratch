@@ -1,11 +1,20 @@
 import "./ResultsSort.css";
-import React from "react";
+import React, { useContext } from "react";
+import MovieContext from "../services/MoviesContext";
 
 export default function ResultsSort(){
+    const contextValue = useContext(MovieContext);
+    const sortMovies = (event)=>{
+        contextValue.movieRepo.sort(event.target.value);
+        console.log(contextValue);
+
+        contextValue.setMovieRepo( contextValue.movieRepo.clone());
+    };
+
     return (
         <div className="result-sort">
             <label>SORT BY</label>
-            <select onChange = {(event)=>{console.log('soring by ' + event.target.value)}}>
+            <select onChange = {sortMovies}>
                 <option>RELEASE DATE</option>
                 <option>NAME</option>
             </select>
