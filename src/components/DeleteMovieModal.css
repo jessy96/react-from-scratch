@@ -1,0 +1,13 @@
+.delete-movie-modal{
+    margin-left: 2%;
+}
+
+.delete-movie-modal button {
+    background-color: #F65261;
+    color: white;
+    height: 2em;
+    width: 8em;
+    margin-bottom: 1em;
+    margin-left: 85%;
+
+}

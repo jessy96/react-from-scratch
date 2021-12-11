@@ -139,7 +139,6 @@ export class MovieRepo {
             compare = (a,b)=>{return parseInt(a.year) - parseInt(b.year)};
         }
         this.movies.sort(compare);
-        console.log(this.movies);
     }
 
 }

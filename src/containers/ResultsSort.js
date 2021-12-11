@@ -6,8 +6,6 @@ export default function ResultsSort(){
     const contextValue = useContext(MovieContext);
     const sortMovies = (event)=>{
         contextValue.movieRepo.sort(event.target.value);
-        console.log(contextValue);
-
         contextValue.setMovieRepo( contextValue.movieRepo.clone());
     };
 

@@ -14,6 +14,21 @@ const  MovieCard = function(props){
     }
 
     const movie = props.movie;
+    if(movie === undefined){
+        movie = {};
+    }
+    if(movie.name === undefined){
+        movie.name = "Best Movie";
+    }
+    if(movie.year === undefined){
+        movie.year = 2000;
+    }
+    if(movie.icon === undefined){
+        movie.icon = "default.png";
+    }
+    if(movie.genres === undefined){
+        movie.genres = {}
+    }
 
     const innerRef = useRef(null);
     useEffect(() => {

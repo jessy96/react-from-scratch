@@ -1,5 +1,6 @@
 import "./ContextMenu.css";
 import React, {useEffect, useState, useCallback} from "react";
+import DeleteMovieModal from "./DeleteMovieModal";
 
 const UpsertMovieModal = React.lazy(()=> import("./UpsertMovieModal"));
 const Modal = React.lazy(() => import("../components/Modal"));
@@ -16,7 +17,7 @@ export default function ContextMenu ({show, handleClose, anchorPoint, movie}){
         return () => {
           document.removeEventListener("click", handleClick);
         };
-      });
+    });
 
     const positionStyle = {
         top: anchorPoint.y,
@@ -29,11 +30,14 @@ export default function ContextMenu ({show, handleClose, anchorPoint, movie}){
             >
                 <div className="context-menu">
                     <button onClick={()=>{setShowEditMovieModal(true)}}>EDIT</button>
-                    <button>DELETE</button>
+                    <button onClick={()=>{setShowDeleteMovieModal(true)}}>DELETE</button>
                 </div>
             </div>
             <Modal show={showEditMovieModal} handleClose={()=>{setShowEditMovieModal(false)}}>
                 <UpsertMovieModal header="EDIT MOVIE" movie={movie} handleCloseModal={()=>{setShowEditMovieModal(false)}}/>
+            </Modal>
+            <Modal show={showDeleteMovieModal} handleClose={()=>{setShowDeleteMovieModal(false)}}>
+                <DeleteMovieModal movie={movie} handleClose={()=>{setShowDeleteMovieModal(false)}}/>
             </Modal>
         </>
     );
