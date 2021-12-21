@@ -1,0 +1,75 @@
+.movie-info-header{
+    background-image: linear-gradient( rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65) ), url('../static/images/header-background.png');
+    background-position:center top;
+    width: 100%;
+    height: 40em;
+}
+
+.movie-info-control{
+    display: flex;
+    justify-content: space-between;
+    padding: 3em;
+    padding-top: 3em;
+}
+
+.movie-info-row{
+    display: flex;
+    margin-top: 1em;
+}
+
+.movie-info{
+    padding: 3em;
+    padding-top: 1em;
+    display: flex;
+}
+
+.movie-info-details{
+    margin-left: 2em;
+}
+
+.movie-info-logo{
+    color: #F65261;
+    font-size: 1.2em;
+}
+
+.movie-info-year, .movie-info-runtime{
+    color: #F65261;
+    font-size: x-large;
+    font-weight: bold;
+}
+.movie-info-runtime{
+    margin-left: 1em;
+}
+
+.movie-info-name{
+    font-size: 3.5em;
+    color: white;
+}
+
+.movie-info-rating{
+    border-radius: 50%;
+    border-color: white;
+    border-width: 1px;
+    border-style: solid;
+    color: yellowgreen;
+    padding-top: 0.45em;
+    font-size: xx-large;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    margin-left: 0.6em;
+}
+
+.movie-info-genres{
+    color: white;
+    margin-top: 1em;
+}
+
+.movie-info-overview{
+    margin-top: 1em;
+    color: white;
+    font-size: larger;
+}
+.movie-info-search-icon{
+    color: #F65261;
+    margin-right: 2em;
+}

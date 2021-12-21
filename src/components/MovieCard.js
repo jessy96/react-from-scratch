@@ -1,11 +1,13 @@
 import "./MovieCard.css";
-import React, {useEffect, useRef, useState, Suspense} from "react";
+import React, {useEffect, useRef, useState, Suspense, useContext} from "react";
 import PropTypes from "prop-types";
+import MovieContext from "../services/MoviesContext";
 
 const ContextMenu = React.lazy(()=> import("./ContextMenu"));
 
 
 const  MovieCard = function(props){
+    const contextValue = useContext(MovieContext);
     const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
     const [showContextMenu, setShowContextMenu] = useState(false);
 
@@ -46,7 +48,7 @@ const  MovieCard = function(props){
 
     return (
         <>
-            <div className="movie-card" ref={innerRef}>
+            <div className="movie-card" ref={innerRef} onClick={()=>contextValue.setMovieInfo(movie)}>
                 <img src={require(`../static/images/movies/${movie.icon}`)}/>
                 <div className="movie-card-info">
                     <div className="movie-card-name">{movie.name}</div>

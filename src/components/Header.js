@@ -2,8 +2,8 @@ import "./Header.css";
 import React, {useState, Suspense} from "react";
 import Search from "./Search";
 
-const UpsertMovieModal = React.lazy(()=> import("../components/UpsertMovieModal"));
-const Modal = React.lazy(() => import("../components/Modal"));
+const UpsertMovieModal = React.lazy(()=> import("./UpsertMovieModal"));
+const Modal = React.lazy(() => import("./Modal"));
 
 export default function Header(){
     const [showCreateMovieModal, setShowCreateMovieModal] = useState(false);
