@@ -1,24 +1,51 @@
-import React, {useContext} from "react";
+import React, {useEffect, useContext} from "react";
+import { connect } from 'react-redux'
 import MovieCard from "../components/MovieCard";
 import MovieContext from "../services/MoviesContext";
+import { fetchMovies } from "../store/movie/movieActions";
 import "./Main.css";
 import ResultsFilter from "./ResultsFilter";
 import ResultsSort from "./ResultsSort";
 
-export default function Main(){
-    const contextValue = useContext(MovieContext);
-    const movies = contextValue.movieRepo.getFirstMovies(6);
+
+function Main({movieData, fetchMovies}){
+    useEffect(() => {
+        fetchMovies()
+    }, [])
     return (
-            <main>
-                <div className="result">
-                    <ResultsFilter/>
-                    <ResultsSort/>
-                </div>
-                <div className="movies">
-                    {movies.map((movie =>(
-                        <MovieCard key={movie.id} movie={movie}/>
-                    )))}
-                </div>
-            </main>
+        <main>
+            <div className="result">
+                <ResultsFilter/>
+                <ResultsSort/>
+            </div>
+            <div className="movies">
+                {
+                    movieData.loading ? (<h2>Loading</h2>):
+                    movieData.error ? (<h2>{movieData.error}</h2>):
+                    movieData.movies.map(
+                        movie => (
+                            <MovieCard key={movie.id} movie={movie}/>
+                        )
+                    )
+                }
+            </div>
+        </main>
     )
 }
+
+const mapStateToProps = state => {
+    return {
+      movieData: state.movie
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+      fetchMovies: () => dispatch(fetchMovies())
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Main)

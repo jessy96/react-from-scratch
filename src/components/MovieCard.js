@@ -5,7 +5,6 @@ import MovieContext from "../services/MoviesContext";
 
 const ContextMenu = React.lazy(()=> import("./ContextMenu"));
 
-
 const  MovieCard = function(props){
     const contextValue = useContext(MovieContext);
     const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
@@ -19,17 +18,17 @@ const  MovieCard = function(props){
     if(movie === undefined){
         movie = {};
     }
-    if(movie.name === undefined){
-        movie.name = "Best Movie";
+    if(movie.title === undefined){
+        movie.title = "Best Movie";
     }
     if(movie.year === undefined){
         movie.year = 2000;
     }
-    if(movie.icon === undefined){
-        movie.icon = "default.png";
+    if(movie.poster_path === undefined){
+        movie.poster_path = require(`../static/images/movies/default.png`);
     }
     if(movie.genres === undefined){
-        movie.genres = {}
+        movie.genres = []
     }
 
     const innerRef = useRef(null);
@@ -49,11 +48,16 @@ const  MovieCard = function(props){
     return (
         <>
             <div className="movie-card" ref={innerRef} onClick={()=>contextValue.setMovieInfo(movie)}>
-                <img src={require(`../static/images/movies/${movie.icon}`)}/>
+                <img src={movie.poster_path} 
+                    onError={(e)=>{
+                        e.target.onerror = null; 
+                        e.target.src=require(`../static/images/movies/default.png`)
+                    }}
+                />
                 <div className="movie-card-info">
-                    <div className="movie-card-name">{movie.name}</div>
+                    <div className="movie-card-name">{movie.title}</div>
                     <div className="movie-card-genres">
-                        {movie.genres.map(genre=>genre.name).join(", ")}
+                        {movie.genres.join(", ")}
                     </div>
                     <div className="movie-card-year">{movie.year}</div>
                 </div>
