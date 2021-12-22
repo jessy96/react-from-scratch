@@ -1,7 +1,7 @@
 import { 
     FETCH_MOVIES_REQUEST, 
     FETCH_MOVIES_SUCCESS,
-    FETCH_MOVIES_FAILURE 
+    MOVIES_REQUEST_FAILURE 
 } from "./movieTypes";
 
 
@@ -26,8 +26,8 @@ const reducer = (state = initialState, action) => {
                 movies: action.payload,
                 error: ''
             }
-        case FETCH_MOVIES_FAILURE:
-            console.log(FETCH_MOVIES_FAILURE)
+        case MOVIES_REQUEST_FAILURE:
+            console.log(MOVIES_REQUEST_FAILURE)
             return {
                 loading: false,
                 error: action.payload,

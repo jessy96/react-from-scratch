@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { 
-    FETCH_MOVIES_FAILURE, 
+    MOVIES_REQUEST_FAILURE, 
     FETCH_MOVIES_REQUEST, 
     FETCH_MOVIES_SUCCESS 
 } from './movieTypes'
@@ -18,9 +18,9 @@ export const fetchMoviesSuccess = (movies) => {
     }
 }
 
-export const fetchMoviesFailer = (error) => {
+export const movieRequestFailure = (error) => {
     return {
-        type: FETCH_MOVIES_FAILURE,
+        type: MOVIES_REQUEST_FAILURE,
         payload: error
     }
 }
@@ -36,7 +36,21 @@ export const fetchMovies = () => {
             })
             .catch(error => {
                 console.log(`error is ${error}`)
-                dispatch(fetchMoviesFailer(error.message))
+                dispatch(movieRequestFailure(error.message))
+            })
+    }
+}
+
+export const deleteMovie = (id) => {
+    return dispatch => {
+        axios
+            .delete(`http://localhost:4000/movies/${id}`)
+            .then(()=>{
+                dispatch(fetchMovies())
+            })
+            .catch(error => {
+                console.log(`error is ${error}`)
+                dispatch(movieRequestFailure(error.message))
             })
     }
 }
