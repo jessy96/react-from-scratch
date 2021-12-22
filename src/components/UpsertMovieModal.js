@@ -3,14 +3,20 @@ import React, {useContext} from "react";
 import { useForm } from "react-hook-form";
 import MoviesContext, { MovieRepo } from "../services/MoviesContext";
 import GenresRepo from "../services/GenreRepo";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../store";
 
 
 export default function UpsertMovieModal({header, movie, handleCloseModal}){
-    let contextValue = useContext(MoviesContext);
+    const dispatch = useDispatch();
+    const {updateMovie} = bindActionCreators(actionCreators, dispatch)
+    
+    // let contextValue = useContext(MoviesContext);
     const genreRepo = new GenresRepo();
     const genres = genreRepo.getAllGenres();
 
-    const movieRepo = contextValue.movieRepo;
+    // const movieRepo = contextValue.movieRepo;
      
     const { register, handleSubmit } = useForm();
     const onSubmit = (data, e) => {
@@ -20,47 +26,51 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
             handleUpdate(movie, data);
         }
 
-        console.log(contextValue);
-
-        contextValue.setMovieRepo(movieRepo.clone());
+        // contextValue.setMovieRepo(movieRepo.clone());
         handleCloseModal();
     };
     const onError = (errors, e) => console.log(errors, e);
 
     const handleUpdate = (movie, formData)=>{
-        if(formData.title && formData.title !==""){
-            movie.name = formData.title;
+        if(formData.title && formData.title !== ""){
+            movie.title = formData.title;
         }
-        if(formData.genre && formData.genre !==""){
-            movie.genres = [{name: formData.genre}];
+        
+        if(
+                formData.genre && 
+                formData.genre !== "" && 
+                formData.genre !== "All"
+            ){
+            movie.genres = [formData.genre];
         }
 
         if(formData.url && formData.url !==""){
-            movie.url = formData.url;
+            movie.poster_path = formData.url;
         }
 
         if(formData.rating && formData.rating !==""){
-            movie.rating = formData.rating;
+            movie.vote_average = Number(formData.rating);
         }
         if(formData.runtime && formData.runtime !==""){
-            movie.runtime = formData.runtime;
+            movie.runtime = Number(formData.runtime);
         }
 
         if(formData.overview && formData.overview !==""){
             movie.overview = formData.overview;
         }
 
-        movieRepo.updateMovie(movie);
+        // movieRepo.updateMovie(movie);
+        updateMovie(movie)
     };
 
 
     const handleCreate = (formData)=>{
         const newMovie = {};
-        newMovie.name = formData.title;
-        newMovie.genres = [{name: formData.genre}];
-        newMovie.url = formData.url;
-        newMovie.rating = formData.rating;
-        newMovie.runtime = formData.runtime;
+        newMovie.title = formData.title;
+        newMovie.genres = [formData.genre];
+        newMovie.poster_path = formData.url;
+        newMovie.vote_average = Number(formData.rating);
+        newMovie.runtime = Number(formData.runtime);
         newMovie.overview = formData.overview;
         movieRepo.addMovie(newMovie);
     };
@@ -68,15 +78,17 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
     const defaultFormData = {
         title: "best movie",
         url: "https://",
-        rating: "7.8",
-        runtime: "minutes"
+        rating: 7.8,
+        runtime: 100,
+        overview: ""
     };
 
     if(movie !== undefined) {
-        defaultFormData.title = movie.name;
-        defaultFormData.url = movie.url;
-        defaultFormData.rating = movie.rating;
+        defaultFormData.title = movie.title;
+        defaultFormData.url = movie.poster_path;
+        defaultFormData.rating = movie.vote_average;
         defaultFormData.runtime = movie.runtime;
+        defaultFormData.overview = movie.overview;
     }
 
     return (
@@ -119,7 +131,7 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
 
                 <div className="col1-3 row4 form-input">
                 	<label>OVERVIEW</label>
-                	<textarea {...register("overview")} type="text" name="overview"></textarea>
+                	<textarea {...register("overview")} type="text" name="overview" defaultValue={defaultFormData.overview}/>
                 </div>
                 
                 <div className="col2-3 row5 form-control">

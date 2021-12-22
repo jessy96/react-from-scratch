@@ -29,7 +29,7 @@ export default function HeaderMovieInfo(){
                     {movie.genres.map(genre=>genre.name).join(", ")}
                 </div>
                 <div className="movie-info-row">
-                    <div className="movie-info-year">{movie.year}</div>
+                    <div className="movie-info-year">{movie.release_date.substring(0, 4)}</div>
                     <div className="movie-info-runtime">
                         {movie.runtime == null ? 0 : movie.runtime} min
                     </div>

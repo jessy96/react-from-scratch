@@ -21,8 +21,8 @@ const  MovieCard = function(props){
     if(movie.title === undefined){
         movie.title = "Best Movie";
     }
-    if(movie.year === undefined){
-        movie.year = 2000;
+    if(movie.release_date === undefined){
+        movie.release_date = 2000;
     }
     if(movie.poster_path === undefined){
         movie.poster_path = require(`../static/images/movies/default.png`);
@@ -59,7 +59,7 @@ const  MovieCard = function(props){
                     <div className="movie-card-genres">
                         {movie.genres.join(", ")}
                     </div>
-                    <div className="movie-card-year">{movie.year}</div>
+                    <div className="movie-card-year">{movie.release_date.substring(0, 4)}</div>
                 </div>
             </div>
             <Suspense fallback={<div className="error">Loading...</div>}>

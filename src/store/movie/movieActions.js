@@ -35,7 +35,6 @@ export const fetchMovies = () => {
                 dispatch(fetchMoviesSuccess(movies))
             })
             .catch(error => {
-                console.log(`error is ${error}`)
                 dispatch(movieRequestFailure(error.message))
             })
     }
@@ -49,8 +48,20 @@ export const deleteMovie = (id) => {
                 dispatch(fetchMovies())
             })
             .catch(error => {
-                console.log(`error is ${error}`)
                 dispatch(movieRequestFailure(error.message))
+            })
+    }
+}
+
+export const updateMovie = (movie) => {
+    return dispatch => {
+        axios
+            .put("http://localhost:4000/movies", movie)
+            .then((response) => {
+                dispatch(fetchMovies())
+            })
+            .catch(error => {
+                dispatch(movieRequestFailure(error))
             })
     }
 }
