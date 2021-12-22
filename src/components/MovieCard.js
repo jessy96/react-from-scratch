@@ -22,7 +22,7 @@ const  MovieCard = function(props){
         movie.title = "Best Movie";
     }
     if(movie.release_date === undefined){
-        movie.release_date = 2000;
+        movie.release_date = "2000";
     }
     if(movie.poster_path === undefined){
         movie.poster_path = require(`../static/images/movies/default.png`);
@@ -57,7 +57,7 @@ const  MovieCard = function(props){
                 <div className="movie-card-info">
                     <div className="movie-card-name">{movie.title}</div>
                     <div className="movie-card-genres">
-                        {movie.genres.join(", ")}
+                        {movie.genres.slice(0, 3).join(", ")}
                     </div>
                     <div className="movie-card-year">{movie.release_date.substring(0, 4)}</div>
                 </div>

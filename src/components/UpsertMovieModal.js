@@ -1,7 +1,6 @@
 import "./UpsertMovieModal.css";
-import React, {useContext} from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import MoviesContext, { MovieRepo } from "../services/MoviesContext";
 import GenresRepo from "../services/GenreRepo";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -10,13 +9,11 @@ import { actionCreators } from "../store";
 
 export default function UpsertMovieModal({header, movie, handleCloseModal}){
     const dispatch = useDispatch();
-    const {updateMovie} = bindActionCreators(actionCreators, dispatch)
+    const {updateMovie, createMovie} = bindActionCreators(actionCreators, dispatch)
     
-    // let contextValue = useContext(MoviesContext);
     const genreRepo = new GenresRepo();
     const genres = genreRepo.getAllGenres();
 
-    // const movieRepo = contextValue.movieRepo;
      
     const { register, handleSubmit } = useForm();
     const onSubmit = (data, e) => {
@@ -26,7 +23,6 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
             handleUpdate(movie, data);
         }
 
-        // contextValue.setMovieRepo(movieRepo.clone());
         handleCloseModal();
     };
     const onError = (errors, e) => console.log(errors, e);
@@ -59,7 +55,6 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
             movie.overview = formData.overview;
         }
 
-        // movieRepo.updateMovie(movie);
         updateMovie(movie)
     };
 
@@ -72,15 +67,15 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
         newMovie.vote_average = Number(formData.rating);
         newMovie.runtime = Number(formData.runtime);
         newMovie.overview = formData.overview;
-        movieRepo.addMovie(newMovie);
+        createMovie(newMovie)
     };
 
     const defaultFormData = {
         title: "best movie",
-        url: "https://",
+        url: "https://default-path",
         rating: 7.8,
         runtime: 100,
-        overview: ""
+        overview: "Lorem ipsum"
     };
 
     if(movie !== undefined) {

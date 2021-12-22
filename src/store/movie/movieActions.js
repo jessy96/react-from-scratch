@@ -29,7 +29,7 @@ export const fetchMovies = () => {
     return (dispatch) => {
         dispatch(fetchMoviesRequest())
         axios
-            .get("http://localhost:4000/movies?offset=1&limit=6")
+            .get("http://localhost:4000/movies?sortBy=id&sortOrder=desc&offset=0&limit=6")
             .then(response => {
                 const movies = response.data.data
                 dispatch(fetchMoviesSuccess(movies))
@@ -58,6 +58,21 @@ export const updateMovie = (movie) => {
         axios
             .put("http://localhost:4000/movies", movie)
             .then((response) => {
+                dispatch(fetchMovies())
+            })
+            .catch(error => {
+                dispatch(movieRequestFailure(error))
+            })
+    }
+}
+
+export const createMovie = (movie) => {
+    return dispatch => {
+        console.log("about to create movie:")
+        console.log(JSON.stringify(movie))
+        axios
+            .post("http://localhost:4000/movies", movie)
+            .then(()=>{
                 dispatch(fetchMovies())
             })
             .catch(error => {
