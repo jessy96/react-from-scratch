@@ -1,12 +1,12 @@
 import "./MovieCard.css";
-import React, {useEffect, useRef, useState, Suspense, useContext} from "react";
+import React, {useEffect, useRef, useState, Suspense} from "react";
+import { connect } from 'react-redux'
 import PropTypes from "prop-types";
-import MovieContext from "../services/MoviesContext";
+import { turnOnMovieInfo } from "../store/movie/movieActions";
 
 const ContextMenu = React.lazy(()=> import("./ContextMenu"));
 
 const  MovieCard = function(props){
-    const contextValue = useContext(MovieContext);
     const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
     const [showContextMenu, setShowContextMenu] = useState(false);
 
@@ -47,7 +47,7 @@ const  MovieCard = function(props){
 
     return (
         <>
-            <div className="movie-card" ref={innerRef} onClick={()=>contextValue.setMovieInfo(movie)}>
+            <div className="movie-card" ref={innerRef} onClick={()=>props.turnOnMovieInfo(movie)}>
                 <img src={movie.poster_path} 
                     onError={(e)=>{
                         e.target.onerror = null; 
@@ -77,4 +77,15 @@ MovieCard.propTypes = {
     movie: PropTypes.object.isRequired
 };
 
-export default MovieCard;
+
+const mapDispatchToProps = dispatch => {
+    return {
+        turnOnMovieInfo: (movieInfo) => dispatch(turnOnMovieInfo(movieInfo))
+    }
+}
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(MovieCard)
+

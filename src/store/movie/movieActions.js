@@ -2,7 +2,9 @@ import axios from 'axios'
 import { 
     MOVIES_REQUEST_FAILURE, 
     FETCH_MOVIES_REQUEST, 
-    FETCH_MOVIES_SUCCESS 
+    FETCH_MOVIES_SUCCESS, 
+    TURN_OFF_MOVIE_INFO,
+    TURN_ON_MOVIE_INFO
 } from './movieTypes'
 
 export const fetchMoviesRequest = () => {
@@ -22,6 +24,20 @@ export const movieRequestFailure = (error) => {
     return {
         type: MOVIES_REQUEST_FAILURE,
         payload: error
+    }
+}
+
+export const turnOffMovieInfo = () => {
+    return {
+        type: TURN_OFF_MOVIE_INFO
+    }
+}
+
+export const turnOnMovieInfo = (movieInfo) => {
+    return {
+        type: TURN_ON_MOVIE_INFO,
+        payload: movieInfo
+
     }
 }
 

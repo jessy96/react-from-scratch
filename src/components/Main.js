@@ -1,7 +1,6 @@
-import React, {useEffect, useContext} from "react";
+import React, {useEffect} from "react";
 import { connect } from 'react-redux'
 import MovieCard from "../components/MovieCard";
-import MovieContext from "../services/MoviesContext";
 import { fetchMovies } from "../store/movie/movieActions";
 import "./Main.css";
 import ResultsFilter from "./ResultsFilter";

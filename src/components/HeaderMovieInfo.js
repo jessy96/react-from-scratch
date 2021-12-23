@@ -1,32 +1,43 @@
 import "./HeaderMovieInfo.css";
 import 'font-awesome/css/font-awesome.min.css';
-import React, {useContext} from "react";
-import MovieContext from "../services/MoviesContext";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../store";
 
-export default function HeaderMovieInfo(){
-    const contextValue = useContext(MovieContext);
-    const movie = contextValue.movieInfo;
+export default function HeaderMovieInfo () {
+
+    const dispatch = useDispatch()
+    const {turnOffMovieInfo} = bindActionCreators(actionCreators, dispatch)
+    const movie = useSelector(state => state.movie.movieInfo)
+    console.log(movie)
     return <header className="movie-info-header">
         <div className="movie-info-control">
             <div className="movie-info-logo"><b>netflix</b>roulette</div>
-            <i className="fa fa-search movie-info-search-icon" onClick={()=>contextValue.setMovieInfo(null)}></i>
+            <i className="fa fa-search movie-info-search-icon" onClick={()=>turnOffMovieInfo()}></i>
         </div>
         <div className="movie-info">
             <div className="movie-info-icon">
-                <img src={require(`../static/images/movies/${movie.icon}`)}/>
+                <img 
+                    src={movie.poster_path} 
+                    onError={(e)=>{
+                        e.target.onerror = null; 
+                        e.target.src=require(`../static/images/movies/default.png`)
+                    }}
+                />
             </div>
             <div className="movie-info-details">
                 <div className="movie-info-row">
                     <div className="movie-info-name">
-                        {movie.name == null ? "Best Movie": movie.name}
+                        {movie.title == null ? "Best Movie": movie.title}
                     </div>
                     <div className="movie-info-rating">
-                        {movie.rating == null ? 10 : movie.rating}
+                        {movie.vote_average == null ? 10 : movie.vote_average}
                     </div>
                 </div>
 
                 <div className="movie-info-genres">
-                    {movie.genres.map(genre=>genre.name).join(", ")}
+                    {movie.genres.join(", ")}
                 </div>
                 <div className="movie-info-row">
                     <div className="movie-info-year">{movie.release_date.substring(0, 4)}</div>

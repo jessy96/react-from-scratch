@@ -57,6 +57,7 @@
     padding-left: 0.4em;
     padding-right: 0.4em;
     margin-left: 0.6em;
+    height: 70px;
 }
 
 .movie-info-genres{
@@ -72,4 +73,12 @@
 .movie-info-search-icon{
     color: #F65261;
     margin-right: 2em;
+}
+
+.movie-info-icon{
+    height: 28em;
+}
+
+.movie-info-icon img{
+    height: 100%;
 }
