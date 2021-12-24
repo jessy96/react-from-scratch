@@ -1,7 +1,10 @@
+import { FILTER_NONE, SORT_LATEST_PARAM } from "./movieApi";
 import { 
     FETCH_MOVIES_REQUEST, 
     FETCH_MOVIES_SUCCESS,
     MOVIES_REQUEST_FAILURE,
+    SET_FILTER_PARAM,
+    SET_SORT_PARAMS,
     TURN_OFF_MOVIE_INFO,
     TURN_ON_MOVIE_INFO 
 } from "./movieTypes";
@@ -11,7 +14,9 @@ const initialState = {
     loading: false,
     movies: [],
     movieInfo: null,
-    error: ''
+    error: '',
+    sortParams: SORT_LATEST_PARAM,
+    filterParam: FILTER_NONE
   }
 
 const reducer = (state = initialState, action) => {
@@ -25,6 +30,7 @@ const reducer = (state = initialState, action) => {
         case FETCH_MOVIES_SUCCESS:
             console.log(FETCH_MOVIES_SUCCESS)
             return  {
+                ...state,
                 loading: false,
                 movies: action.payload,
                 error: ''
@@ -32,6 +38,7 @@ const reducer = (state = initialState, action) => {
         case MOVIES_REQUEST_FAILURE:
             console.log(MOVIES_REQUEST_FAILURE)
             return {
+                ...state,
                 loading: false,
                 error: action.payload,
                 movies: []
@@ -45,6 +52,16 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 movieInfo: null
+            }
+        case SET_SORT_PARAMS: 
+            return {
+                ...state,
+                sortParams: action.payload
+            }
+        case SET_FILTER_PARAM:
+            return {
+                ...state,
+                filterParam: action.payload
             }
         default:
             return state;

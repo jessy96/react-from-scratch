@@ -1,11 +1,23 @@
 import axios from 'axios'
+import { MOVIE_BASE_URL, SORT_DATE_PARAM, SORT_LATEST_PARAM, SORT_RATING_PARAM, SORT_TITLE_PARAM } from './movieApi'
 import { 
     MOVIES_REQUEST_FAILURE, 
     FETCH_MOVIES_REQUEST, 
     FETCH_MOVIES_SUCCESS, 
     TURN_OFF_MOVIE_INFO,
-    TURN_ON_MOVIE_INFO
+    TURN_ON_MOVIE_INFO,
+    SET_SORT_PARAMS,
+    SET_FILTER_PARAM
 } from './movieTypes'
+
+import { 
+    FILTER_COMEDY_PARAM, 
+    FILTER_CRIME_PARAM, 
+    FILTER_DOCUMENTARY_PARAM, 
+    FILTER_HORROR_PARAM, 
+    FILTER_NONE 
+} from "./movieApi";
+
 
 export const fetchMoviesRequest = () => {
     return {
@@ -42,10 +54,12 @@ export const turnOnMovieInfo = (movieInfo) => {
 }
 
 export const fetchMovies = () => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch(fetchMoviesRequest())
+        console.log(getState())
+        console.log(`${MOVIE_BASE_URL}${getState().movie.sortParams}${getState().movie.filterParam}`)
         axios
-            .get("http://localhost:4000/movies?sortBy=id&sortOrder=desc&offset=0&limit=6")
+            .get(`${MOVIE_BASE_URL}${getState().movie.sortParams}${getState().movie.filterParam}`)
             .then(response => {
                 const movies = response.data.data
                 dispatch(fetchMoviesSuccess(movies))
@@ -59,7 +73,7 @@ export const fetchMovies = () => {
 export const deleteMovie = (id) => {
     return dispatch => {
         axios
-            .delete(`http://localhost:4000/movies/${id}`)
+            .delete(`${MOVIE_BASE_URL}/${id}`)
             .then(()=>{
                 dispatch(fetchMovies())
             })
@@ -71,8 +85,11 @@ export const deleteMovie = (id) => {
 
 export const updateMovie = (movie) => {
     return dispatch => {
+        if (movie.tagline == null || movie.tagline === '') {
+            movie.tagline = "default"
+        }
         axios
-            .put("http://localhost:4000/movies", movie)
+            .put(MOVIE_BASE_URL, movie)
             .then((response) => {
                 dispatch(fetchMovies())
             })
@@ -84,15 +101,78 @@ export const updateMovie = (movie) => {
 
 export const createMovie = (movie) => {
     return dispatch => {
-        console.log("about to create movie:")
-        console.log(JSON.stringify(movie))
         axios
-            .post("http://localhost:4000/movies", movie)
+            .post(MOVIE_BASE_URL, movie)
             .then(()=>{
                 dispatch(fetchMovies())
             })
             .catch(error => {
                 dispatch(movieRequestFailure(error))
             })
+    }
+}
+
+export const setSortParam = sortParams => {
+    return {
+        type: SET_SORT_PARAMS,
+        payload: sortParams
+    }
+}
+
+export const fetchSort = sortText => {
+    return dispatch => {
+        const updateWithSort = sortParams => {
+            dispatch(setSortParam(sortParams))
+                dispatch(fetchMovies())
+        }
+        switch (sortText) {
+            case 'NAME':
+                updateWithSort(SORT_TITLE_PARAM)
+                return
+            case 'RELEASE DATE':
+                updateWithSort(SORT_DATE_PARAM)
+                return
+            case 'RATING':
+                updateWithSort(SORT_RATING_PARAM)
+                return
+            default:
+                updateWithSort(SORT_LATEST_PARAM)
+                return
+        }
+    }
+}
+
+export const setFilterParam = filterParam => {
+    return {
+        type: SET_FILTER_PARAM,
+        payload: filterParam
+    }
+}
+
+export const fetchFilter = filterText => {
+    return dispatch => {
+        const setFilterAndFetch = filter => {
+            dispatch(setFilterParam(filter))
+            dispatch(fetchMovies())
+
+        }
+        switch(filterText){
+            case 'DOCUMENTARY':
+                setFilterAndFetch(FILTER_DOCUMENTARY_PARAM)
+                return
+            case 'COMEDY':
+                setFilterAndFetch(FILTER_COMEDY_PARAM)
+                return
+            case 'CRIME':
+                setFilterAndFetch(FILTER_CRIME_PARAM)
+                return
+            case 'HORROR':
+                setFilterAndFetch(FILTER_HORROR_PARAM)
+                return
+            default:
+                setFilterAndFetch(FILTER_NONE)
+                return        
+        }
+        
     }
 }
