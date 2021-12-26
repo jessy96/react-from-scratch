@@ -5,29 +5,12 @@ import PropTypes from "prop-types";
 const ContextMenu = React.lazy(()=> import("./ContextMenu"));
 
 
-const  MovieCard = props => {
+const  MovieCard = ({movie, name, year, icon, genres}) => {
     const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
     const [showContextMenu, setShowContextMenu] = useState(false);
 
-    const closeContextMenu = ()=>{
+    const closeContextMenu = () => {
         setShowContextMenu(false)
-    }
-
-    const movie = props.movie;
-    if(movie === undefined){
-        movie = {};
-    }
-    if(movie.name === undefined){
-        movie.name = "Best Movie";
-    }
-    if(movie.year === undefined){
-        movie.year = 2000;
-    }
-    if(movie.icon === undefined){
-        movie.icon = "default.png";
-    }
-    if(movie.genres === undefined){
-        movie.genres = {}
     }
 
     const innerRef = useRef(null);
@@ -47,28 +30,37 @@ const  MovieCard = props => {
     return (
         <>
             <div className="movie-card" ref={innerRef}>
-                <img src={require(`../static/images/movies/${movie.icon}`)}/>
+                <img src={require(`../static/images/movies/${icon}`)}/>
                 <div className="movie-card-info">
-                    <div className="movie-card-name">{movie.name}</div>
+                    <div className="movie-card-name">{name}</div>
                     <div className="movie-card-genres">
-                        {movie.genres.map(genre=>genre.name).join(", ")}
+                        {genres.map(genre=>genre.name).join(", ")}
                     </div>
-                    <div className="movie-card-year">{movie.year}</div>
+                    <div className="movie-card-year">{year}</div>
                 </div>
             </div>
             <Suspense fallback={<div className="error">Loading...</div>}>
                 <ContextMenu show={showContextMenu} 
                     handleClose={closeContextMenu} 
                     anchorPoint={anchorPoint}
-                    movie={movie}
-                    />
+                    movie={movie}/>
             </Suspense>
         </>
     )
 }
 
 MovieCard.propTypes = {
-    movie: PropTypes.object.isRequired
+    name: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    year: PropTypes.number.isRequired,
+    genres: PropTypes.array.isRequired
 };
+
+MovieCard.defaultProps = {
+    name: "Best Movie",
+    icon: "default.png",
+    year: 2000,
+    genres: []
+}
 
 export default MovieCard;

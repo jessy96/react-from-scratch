@@ -16,7 +16,12 @@ export default function Main(){
                 </div>
                 <div className="movies">
                     {movies.map((movie =>(
-                        <MovieCard key={movie.id} movie={movie}/>
+                        <MovieCard key={movie.id} 
+                            movie={movie}
+                            name={movie.name}
+                            year={movie.year}
+                            icon={movie.icon}
+                            genres={movie.genres}/>
                     )))}
                 </div>
             </main>
