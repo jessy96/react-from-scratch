@@ -50,6 +50,7 @@ const  MovieCard = ({movie, name, year, icon, genres}) => {
 }
 
 MovieCard.propTypes = {
+    movie: PropTypes.object.isRequired,
     name: PropTypes.string.isRequired,
     icon: PropTypes.string.isRequired,
     year: PropTypes.number.isRequired,
@@ -57,6 +58,7 @@ MovieCard.propTypes = {
 };
 
 MovieCard.defaultProps = {
+    movie: {},
     name: "Best Movie",
     icon: "default.png",
     year: 2000,
