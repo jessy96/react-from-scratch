@@ -3,10 +3,10 @@ import React, { useContext } from "react";
 import MovieContext from "../services/MoviesContext";
 
 export default function ResultsSort(){
-    const contextValue = useContext(MovieContext);
+    const {movieRepo, setMovieRepo} = useContext(MovieContext);
     const sortMovies = (event)=>{
-        contextValue.movieRepo.sort(event.target.value);
-        contextValue.setMovieRepo( contextValue.movieRepo.clone());
+        movieRepo.sort(event.target.value);
+        setMovieRepo(movieRepo.clone());
     };
 
     return (

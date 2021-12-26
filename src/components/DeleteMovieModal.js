@@ -3,10 +3,10 @@ import React, { useContext } from "react";
 import MovieContext from "../services/MoviesContext";
 
 export default function DeleteMovieModal({handleClose, movie}){
-    const contextValue = useContext(MovieContext);
+    const {movieRepo, setMovieRepo} = useContext(MovieContext);
     const deleteMovie = ()=>{
-        contextValue.movieRepo.deleteMovie(movie);
-        contextValue.setMovieRepo(contextValue.movieRepo.clone());
+        movieRepo.deleteMovie(movie);
+        setMovieRepo(movieRepo.clone());
         handleClose();
     }
     return (

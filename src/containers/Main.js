@@ -6,8 +6,8 @@ import ResultsFilter from "./ResultsFilter";
 import ResultsSort from "./ResultsSort";
 
 export default function Main(){
-    const contextValue = useContext(MovieContext);
-    const movies = contextValue.movieRepo.getFirstMovies(6);
+    const {movieRepo} = useContext(MovieContext);
+    const movies = movieRepo.getFirstMovies(6);
     return (
             <main>
                 <div className="result">
