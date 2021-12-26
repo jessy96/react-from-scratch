@@ -6,7 +6,7 @@ import GenresRepo from "../services/GenreRepo";
 
 
 export default function UpsertMovieModal({header, movie, handleCloseModal}){
-    let {movieRepo, setMovieRepo} = useContext(MoviesContext);
+    const {movieRepo, setMovieRepo} = useContext(MoviesContext);
     const genreRepo = new GenresRepo();
     const genres = genreRepo.getAllGenres();
      
