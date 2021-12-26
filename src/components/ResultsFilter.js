@@ -9,7 +9,7 @@ export default function ResultsFilter(props){
     const genreRepo = new GenresRepo();
     const genres = genreRepo.getFirstGenres(5);
     const dispatch = useDispatch();
-    const {fetchFilter}  = bindActionCreators(actionCreators, dispatch)
+    const {fetchFilter} = bindActionCreators(actionCreators, dispatch)
 
     const handleChangeFilter = e => {
         fetchFilter(e.target.outerText)
@@ -18,9 +18,9 @@ export default function ResultsFilter(props){
     return (
         <div className="result-filter">
             {genres.map((genre)=>(
-                <a key={genre.id} onClick={handleChangeFilter}>
+                <button key={genre.id} onClick={handleChangeFilter}>
                     {genre.name.toUpperCase()}
-                </a>
+                </button>
             ))}
         </div>
     )
