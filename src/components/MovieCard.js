@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 const ContextMenu = React.lazy(()=> import("./ContextMenu"));
 
 
-const  MovieCard = function(props){
+const  MovieCard = props => {
     const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
     const [showContextMenu, setShowContextMenu] = useState(false);
 
