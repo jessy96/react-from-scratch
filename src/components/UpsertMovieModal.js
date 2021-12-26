@@ -70,13 +70,7 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
         createMovie(newMovie)
     };
 
-    const defaultFormData = {
-        title: "best movie",
-        url: "https://default-path",
-        rating: 7.8,
-        runtime: 100,
-        overview: "Lorem ipsum"
-    };
+    const defaultFormData = {}
 
     if(movie !== undefined) {
         defaultFormData.title = movie.title;
@@ -92,12 +86,12 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
             <form className="addMovieForm" onSubmit={handleSubmit(onSubmit, onError)}>
             	<div className="col1-2 row1 form-input">
                 	<label >TITLE</label>
-                	<input {...register("title")} type="text" name="title" defaultValue={defaultFormData.title}/>
+                	<input placeholder="Best Movie" {...register("title")} type="text" name="title" defaultValue={defaultFormData.title}/>
                 </div>
                 
                 <div className="col1-2 row2 form-input">
                 	<label>MOVIE URL</label>
-                	<input {...register("url")} type="text" name="url" defaultValue={defaultFormData.url} />
+                	<input placeholder="http://picture-url" {...register("url")} type="text" name="url" defaultValue={defaultFormData.url} />
                 </div>
                 
                 <div className="col1-2 row3 form-input">
@@ -116,17 +110,17 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
                 
                  <div className="col3 row2 form-input">
                     <label>RATING</label>
-                    <input {...register("rating")} type="text" name="rating" defaultValue={defaultFormData.rating} />
+                    <input placeholder="7.8" {...register("rating")} type="text" name="rating" defaultValue={defaultFormData.rating} />
                  </div>
                  
                  <div className="col3 row3 form-input">
                     <label>RUNTIME</label>
-                    <input {...register("runtime")} type="text" name="runtime" defaultValue={defaultFormData.runtime} />
+                    <input placeholder="120" {...register("runtime")} type="text" name="runtime" defaultValue={defaultFormData.runtime} />
                  </div>
 
                 <div className="col1-3 row4 form-input">
                 	<label>OVERVIEW</label>
-                	<textarea {...register("overview")} type="text" name="overview" defaultValue={defaultFormData.overview}/>
+                	<textarea placeholder="Lorem ipsum" {...register("overview")} type="text" name="overview" defaultValue={defaultFormData.overview}/>
                 </div>
                 
                 <div className="col2-3 row5 form-control">
