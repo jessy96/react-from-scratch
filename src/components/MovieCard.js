@@ -1,5 +1,5 @@
 import "./MovieCard.css";
-import React, {useEffect, useRef, useState, Suspense} from "react";
+import React, {Suspense} from "react";
 import { connect } from 'react-redux'
 import PropTypes from "prop-types";
 import { turnOnMovieInfo } from "../store/movie/movieActions";
@@ -7,12 +7,12 @@ import { useContextMenu } from "../utils/hooks";
 
 const ContextMenu = React.lazy(()=> import("./ContextMenu"));
 
-const  MovieCard = function({movie, title, release_date}){
+const MovieCard = function({movie, title, release_date, turnOnMovieInfo}){
     const [showContextMenu, toggleContextMenu, anchorPoint, contextMenuElementRef] = useContextMenu()
 
     return (
         <>
-            <div className="movie-card" ref={contextMenuElementRef} onClick={()=>props.turnOnMovieInfo(movie)}>
+            <div className="movie-card" ref={contextMenuElementRef} onClick={()=>turnOnMovieInfo(movie)}>
                 <img src={movie.poster_path} 
                     onError={(e)=>{
                         e.target.onerror = null; 

@@ -10,7 +10,6 @@ export default function HeaderMovieInfo () {
     const dispatch = useDispatch()
     const {turnOffMovieInfo} = bindActionCreators(actionCreators, dispatch)
     const movie = useSelector(state => state.movie.movieInfo)
-    console.log(movie)
     return <header className="movie-info-header">
         <div className="movie-info-control">
             <div className="movie-info-logo"><b>netflix</b>roulette</div>
@@ -40,7 +39,9 @@ export default function HeaderMovieInfo () {
                     {movie.genres.join(", ")}
                 </div>
                 <div className="movie-info-row">
-                    <div className="movie-info-year">{movie.release_date.substring(0, 4)}</div>
+                    <div className="movie-info-year">
+                        {movie.release_date ? movie.release_date.substring(0, 4) : null}
+                    </div>
                     <div className="movie-info-runtime">
                         {movie.runtime == null ? 0 : movie.runtime} min
                     </div>
