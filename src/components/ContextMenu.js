@@ -10,7 +10,6 @@ export default function ContextMenu ({show, handleClose, anchorPoint, movie}){
     const [showEditMovieModal, toggleEditModal] = useModal()
     const [showDeleteMovieModal, toggleDeleteModal] = useModal()
 
-    const showHideContextClassName = show ? "context display-block" : "context display-none";
     const handleClick = useCallback(() => (show ? handleClose() : null), [show]);
 
     useEffect(() => {
@@ -26,12 +25,15 @@ export default function ContextMenu ({show, handleClose, anchorPoint, movie}){
     };
     return (
         <>
-            <div className={showHideContextClassName} style={positionStyle}>
-                <div className="context-menu">
-                    <button onClick={toggleEditModal}>EDIT</button>
-                    <button onClick={toggleDeleteModal}>DELETE</button>
-                </div>
-            </div>
+            {!show ? null: 
+                (<div className="context" style={positionStyle}>
+                    <div className="context-menu">
+                        <button onClick={toggleEditModal}>EDIT</button>
+                        <button onClick={toggleDeleteModal}>DELETE</button>
+                    </div>
+                </div>)
+            }
+            
             <Modal show={showEditMovieModal} handleClose={toggleEditModal}>
                 <UpsertMovieModal header="EDIT MOVIE" movie={movie} handleCloseModal={toggleEditModal}/>
             </Modal>

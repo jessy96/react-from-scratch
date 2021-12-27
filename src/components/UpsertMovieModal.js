@@ -6,11 +6,9 @@ import GenresRepo from "../services/GenreRepo";
 
 
 export default function UpsertMovieModal({header, movie, handleCloseModal}){
-    let contextValue = useContext(MoviesContext);
+    const {movieRepo, setMovieRepo} = useContext(MoviesContext);
     const genreRepo = new GenresRepo();
     const genres = genreRepo.getAllGenres();
-
-    const movieRepo = contextValue.movieRepo;
      
     const { register, handleSubmit } = useForm();
     const onSubmit = (data, e) => {
@@ -20,33 +18,31 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
             handleUpdate(movie, data);
         }
 
-        console.log(contextValue);
-
-        contextValue.setMovieRepo(movieRepo.clone());
+        setMovieRepo(movieRepo.clone());
         handleCloseModal();
     };
     const onError = (errors, e) => console.log(errors, e);
 
     const handleUpdate = (movie, formData)=>{
-        if(formData.title && formData.title !==""){
+        if(formData.title){
             movie.name = formData.title;
         }
-        if(formData.genre && formData.genre !==""){
+        if(formData.genre){
             movie.genres = [{name: formData.genre}];
         }
 
-        if(formData.url && formData.url !==""){
+        if(formData.url){
             movie.url = formData.url;
         }
 
-        if(formData.rating && formData.rating !==""){
+        if(formData.rating){
             movie.rating = formData.rating;
         }
-        if(formData.runtime && formData.runtime !==""){
+        if(formData.runtime){
             movie.runtime = formData.runtime;
         }
 
-        if(formData.overview && formData.overview !==""){
+        if(formData.overview){
             movie.overview = formData.overview;
         }
 
