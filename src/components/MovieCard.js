@@ -8,7 +8,7 @@ const ContextMenu = React.lazy(()=> import("./ContextMenu"));
 
 const  MovieCard = function(props){
     const contextValue = useContext(MovieContext);
-    const [showContextMenu, toggleContextMenu, anchorPoint] = useContextMenu()
+    const [showContextMenu, toggleContextMenu, anchorPoint, innerRef] = useContextMenu()
 
     const movie = props.movie;
     if(movie === undefined){

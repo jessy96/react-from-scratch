@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from "react"
 export const useModal = (show = false) => {
     const [showModal, setShowModal] = useState(show)
     const toggle = () => setShowModal(!showModal)
-    return showModal, toggle
+    return [showModal, toggle]
 }
 
 export const useContextMenu = () => {
@@ -24,5 +24,5 @@ export const useContextMenu = () => {
           div.removeEventListener('contextmenu', handleContextMenu);
         };
     }, [])
-    return showContextMenu, toggleContextMenu, anchorPoint
+    return [showContextMenu, toggleContextMenu, anchorPoint, innerRef]
 }
