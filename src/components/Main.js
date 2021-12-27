@@ -23,7 +23,7 @@ function Main({movieData, fetchMovies}){
                     movieData.error ? (<h2>{movieData.error}</h2>):
                     movieData.movies.map(
                         movie => (
-                            <MovieCard key={movie.id} movie={movie}/>
+                            <MovieCard key={movie.id} movie={movie} title={movie.title} release_date={movie.release_date}/>
                         )
                     )
                 }

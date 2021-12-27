@@ -28,30 +28,25 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
     const onError = (errors, e) => console.log(errors, e);
 
     const handleUpdate = (movie, formData)=>{
-        if(formData.title && formData.title !== ""){
+        if(formData.title){
             movie.title = formData.title;
         }
-        
-        if(
-                formData.genre && 
-                formData.genre !== "" && 
-                formData.genre !== "All"
-            ){
-            movie.genres = [formData.genre];
+        if(formData.genre && formData.genre !== "All"){
+            movie.genres = [{name: formData.genre}];
         }
 
-        if(formData.url && formData.url !==""){
+        if(formData.url){
             movie.poster_path = formData.url;
         }
 
-        if(formData.rating && formData.rating !==""){
+        if(formData.rating){
             movie.vote_average = Number(formData.rating);
         }
-        if(formData.runtime && formData.runtime !==""){
+        if(formData.runtime){
             movie.runtime = Number(formData.runtime);
         }
 
-        if(formData.overview && formData.overview !==""){
+        if(formData.overview){
             movie.overview = formData.overview;
         }
 
