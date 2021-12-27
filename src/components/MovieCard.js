@@ -1,25 +1,30 @@
 import "./MovieCard.css";
-import React, {Suspense, useContext} from "react";
+import React, {Suspense} from "react";
+import { connect } from 'react-redux'
 import PropTypes from "prop-types";
-import MovieContext from "../services/MoviesContext";
+import { turnOnMovieInfo } from "../store/movie/movieActions";
 import { useContextMenu } from "../utils/hooks";
 
 const ContextMenu = React.lazy(()=> import("./ContextMenu"));
 
-const  MovieCard = function({movie, name, icon, year, genres}){
-    const contextValue = useContext(MovieContext);
-    const [showContextMenu, toggleContextMenu, anchorPoint, innerRef] = useContextMenu()
+const MovieCard = function({movie, title, release_date, turnOnMovieInfo}){
+    const [showContextMenu, toggleContextMenu, anchorPoint, contextMenuElementRef] = useContextMenu()
 
     return (
         <>
-            <div className="movie-card" ref={innerRef} onClick={()=>contextValue.setMovieInfo(movie)}>
-                <img src={require(`../static/images/movies/${icon}`)}/>
+            <div className="movie-card" ref={contextMenuElementRef} onClick={()=>turnOnMovieInfo(movie)}>
+                <img src={movie.poster_path} 
+                    onError={(e)=>{
+                        e.target.onerror = null; 
+                        e.target.src=require(`../static/images/movies/default.png`)
+                    }}
+                />
                 <div className="movie-card-info">
-                    <div className="movie-card-name">{name}</div>
+                    <div className="movie-card-name">{title}</div>
                     <div className="movie-card-genres">
-                        {genres.map(genre=>genre.name).join(", ")}
+                        {movie.genres.slice(0, 3).join(", ")}
                     </div>
-                    <div className="movie-card-year">{year}</div>
+                    <div className="movie-card-year">{release_date.substring(0, 4)}</div>
                 </div>
             </div>
             <Suspense fallback={<div className="error">Loading...</div>}>
@@ -34,18 +39,26 @@ const  MovieCard = function({movie, name, icon, year, genres}){
 
 MovieCard.propTypes = {
     movie: PropTypes.object.isRequired,
-    name: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired,
-    year: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    release_date: PropTypes.string.isRequired,
     genres: PropTypes.array.isRequired
 };
 
 MovieCard.defaultProps = {
     movie: {},
-    name: "Best Movie",
-    icon: "default.png",
-    year: 2000,
+    title: "Best Movie",
+    release_date: "2000",
     genres: []
 }
 
-export default MovieCard;
+
+const mapDispatchToProps = dispatch => {
+    return {
+        turnOnMovieInfo: (movieInfo) => dispatch(turnOnMovieInfo(movieInfo))
+    }
+}
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(MovieCard)

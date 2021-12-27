@@ -1,14 +1,19 @@
 import "./UpsertMovieModal.css";
-import React, {useContext} from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import MoviesContext, { MovieRepo } from "../services/MoviesContext";
 import GenresRepo from "../services/GenreRepo";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../store";
 
 
 export default function UpsertMovieModal({header, movie, handleCloseModal}){
-    const {movieRepo, setMovieRepo} = useContext(MoviesContext);
+    const dispatch = useDispatch();
+    const {updateMovie, createMovie} = bindActionCreators(actionCreators, dispatch)
+    
     const genreRepo = new GenresRepo();
     const genres = genreRepo.getAllGenres();
+
      
     const { register, handleSubmit } = useForm();
     const onSubmit = (data, e) => {
@@ -18,61 +23,56 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
             handleUpdate(movie, data);
         }
 
-        setMovieRepo(movieRepo.clone());
         handleCloseModal();
     };
     const onError = (errors, e) => console.log(errors, e);
 
     const handleUpdate = (movie, formData)=>{
         if(formData.title){
-            movie.name = formData.title;
+            movie.title = formData.title;
         }
-        if(formData.genre){
+        if(formData.genre && formData.genre !== "All"){
             movie.genres = [{name: formData.genre}];
         }
 
         if(formData.url){
-            movie.url = formData.url;
+            movie.poster_path = formData.url;
         }
 
         if(formData.rating){
-            movie.rating = formData.rating;
+            movie.vote_average = Number(formData.rating);
         }
         if(formData.runtime){
-            movie.runtime = formData.runtime;
+            movie.runtime = Number(formData.runtime);
         }
 
         if(formData.overview){
             movie.overview = formData.overview;
         }
 
-        movieRepo.updateMovie(movie);
+        updateMovie(movie)
     };
 
 
     const handleCreate = (formData)=>{
         const newMovie = {};
-        newMovie.name = formData.title;
-        newMovie.genres = [{name: formData.genre}];
-        newMovie.url = formData.url;
-        newMovie.rating = formData.rating;
-        newMovie.runtime = formData.runtime;
+        newMovie.title = formData.title;
+        newMovie.genres = [formData.genre];
+        newMovie.poster_path = formData.url;
+        newMovie.vote_average = Number(formData.rating);
+        newMovie.runtime = Number(formData.runtime);
         newMovie.overview = formData.overview;
-        movieRepo.addMovie(newMovie);
+        createMovie(newMovie)
     };
 
-    const defaultFormData = {
-        title: "best movie",
-        url: "https://",
-        rating: "7.8",
-        runtime: "minutes"
-    };
+    const defaultFormData = {}
 
     if(movie !== undefined) {
-        defaultFormData.title = movie.name;
-        defaultFormData.url = movie.url;
-        defaultFormData.rating = movie.rating;
+        defaultFormData.title = movie.title;
+        defaultFormData.url = movie.poster_path;
+        defaultFormData.rating = movie.vote_average;
         defaultFormData.runtime = movie.runtime;
+        defaultFormData.overview = movie.overview;
     }
 
     return (
@@ -81,12 +81,12 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
             <form className="addMovieForm" onSubmit={handleSubmit(onSubmit, onError)}>
             	<div className="col1-2 row1 form-input">
                 	<label >TITLE</label>
-                	<input {...register("title")} type="text" name="title" defaultValue={defaultFormData.title}/>
+                	<input placeholder="Best Movie" {...register("title")} type="text" name="title" defaultValue={defaultFormData.title}/>
                 </div>
                 
                 <div className="col1-2 row2 form-input">
                 	<label>MOVIE URL</label>
-                	<input {...register("url")} type="text" name="url" defaultValue={defaultFormData.url} />
+                	<input placeholder="http://picture-url" {...register("url")} type="text" name="url" defaultValue={defaultFormData.url} />
                 </div>
                 
                 <div className="col1-2 row3 form-input">
@@ -105,17 +105,17 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
                 
                  <div className="col3 row2 form-input">
                     <label>RATING</label>
-                    <input {...register("rating")} type="text" name="rating" defaultValue={defaultFormData.rating} />
+                    <input placeholder="7.8" {...register("rating")} type="text" name="rating" defaultValue={defaultFormData.rating} />
                  </div>
                  
                  <div className="col3 row3 form-input">
                     <label>RUNTIME</label>
-                    <input {...register("runtime")} type="text" name="runtime" defaultValue={defaultFormData.runtime} />
+                    <input placeholder="120" {...register("runtime")} type="text" name="runtime" defaultValue={defaultFormData.runtime} />
                  </div>
 
                 <div className="col1-3 row4 form-input">
                 	<label>OVERVIEW</label>
-                	<textarea {...register("overview")} type="text" name="overview"></textarea>
+                	<textarea placeholder="Lorem ipsum" {...register("overview")} type="text" name="overview" defaultValue={defaultFormData.overview}/>
                 </div>
                 
                 <div className="col2-3 row5 form-control">

@@ -3,27 +3,30 @@
     margin-left: 1em;
 }
 
-.result-filter a{
+.result-filter button{
+    background: none;
     color: white;
     margin-left: 1em;
+    border: none;
+    font-size: 1em;
 }
 
-.result-filter a:link {
+.result-filter button:link {
     text-decoration: none;
 }
   
-.result-filter a:visited {
+.result-filter button:visited {
     text-decoration: none;
 }
   
-.result-filter a:hover {
+.result-filter button:hover {
     text-decoration: underline;
-    text-underline-offset: 1.17em;
+    text-underline-offset: 1.15em;
     text-decoration-color: #F65261;
     text-decoration-thickness: 0.25em;
 }
   
-.result-filter a:active {
+.result-filter button:active {
     text-decoration: underline;
 }
 
