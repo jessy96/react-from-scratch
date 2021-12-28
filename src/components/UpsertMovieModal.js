@@ -1,10 +1,10 @@
 import "./UpsertMovieModal.css";
 import React from "react";
-import { useForm } from "react-hook-form";
 import GenresRepo from "../services/GenreRepo";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../store";
+import { useFormik } from "formik";
 
 
 export default function UpsertMovieModal({header, movie, handleCloseModal}){
@@ -14,18 +14,27 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
     const genreRepo = new GenresRepo();
     const genres = genreRepo.getAllGenres();
 
-     
-    const { register, handleSubmit } = useForm();
-    const onSubmit = (data, e) => {
-        if (movie === undefined){
-            handleCreate(data);
-        } else {
-            handleUpdate(movie, data);
-        }
+    const defaultFormData = {}
 
-        handleCloseModal();
-    };
-    const onError = (errors, e) => console.log(errors, e);
+    if(movie !== undefined) {
+        defaultFormData.title = movie.title;
+        defaultFormData.url = movie.poster_path;
+        defaultFormData.rating = movie.vote_average;
+        defaultFormData.runtime = movie.runtime;
+        defaultFormData.overview = movie.overview;
+    }
+
+    const formik = useFormik({
+        initialValues: defaultFormData,
+        onSubmit: values => {
+            if (movie === undefined){
+                handleCreate(values);
+            } else {
+                handleUpdate(movie, values);
+            }
+            handleCloseModal();
+        }
+    })
 
     const handleUpdate = (movie, formData)=>{
         if(formData.title){
@@ -64,58 +73,85 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
         newMovie.overview = formData.overview;
         createMovie(newMovie)
     };
-
-    const defaultFormData = {}
-
-    if(movie !== undefined) {
-        defaultFormData.title = movie.title;
-        defaultFormData.url = movie.poster_path;
-        defaultFormData.rating = movie.vote_average;
-        defaultFormData.runtime = movie.runtime;
-        defaultFormData.overview = movie.overview;
-    }
+  
 
     return (
         <>
             <h1>{header}</h1>
-            <form className="addMovieForm" onSubmit={handleSubmit(onSubmit, onError)}>
+            <form className="addMovieForm" onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
             	<div className="col1-2 row1 form-input">
                 	<label >TITLE</label>
-                	<input placeholder="Best Movie" {...register("title")} type="text" name="title" defaultValue={defaultFormData.title}/>
+                	<input 
+                        placeholder="Best Movie" 
+                        type="text" 
+                        name="title" 
+                        onChange={formik.handleChange}
+                        value={formik.values.title}
+                    />
                 </div>
                 
                 <div className="col1-2 row2 form-input">
                 	<label>MOVIE URL</label>
-                	<input placeholder="http://picture-url" {...register("url")} type="text" name="url" defaultValue={defaultFormData.url} />
+                	<input 
+                        type="text"
+                        placeholder="http://picture-url" 
+                        name="url" 
+                        onChange={formik.handleChange}
+                        value={formik.values.url} 
+                    />
                 </div>
                 
                 <div className="col1-2 row3 form-input">
                 	<label>GENRE</label>
-                    <select {...register("genre")} name="genre">
-                        {genres.map((genre) =>
-                            <option key={genre.id}>{genre.name}</option>
-                        )}
+                    <select 
+                        name="genre" 
+                        onChange={formik.handleChange}
+                        value={formik.values.genre}>
+
+                            {genres.map((genre) =>
+                                <option key={genre.id}>{genre.name}</option>
+                            )}
                     </select>
                 </div>
                 
                 <div className="col3 row1 form-input">
                 	<label>RELEASE DATE</label>
-                	<input type="date" {...register("date")} name="releaseDate"/>
+                	<input type="date" onChange={formik.handleChange} 
+                        value = {formik.values.date}
+                        name="releaseDate"/>
                 </div>
                 
                  <div className="col3 row2 form-input">
                     <label>RATING</label>
-                    <input placeholder="7.8" {...register("rating")} type="text" name="rating" defaultValue={defaultFormData.rating} />
+                    <input 
+                        placeholder="7.8"  
+                        type="text" 
+                        name="rating"
+                        onChange={formik.handleChange}
+                        value={formik.values.rating}
+                     />
                  </div>
                  
                  <div className="col3 row3 form-input">
                     <label>RUNTIME</label>
-                    <input placeholder="120" {...register("runtime")} type="text" name="runtime" defaultValue={defaultFormData.runtime} />
+                    <input 
+                        placeholder="120"
+                        type="text" 
+                        name="runtime" 
+                        onChange={formik.handleChange}
+                        value={formik.values.runtime}
+                    />
                  </div>
 
                 <div className="col1-3 row4 form-input">
                 	<label>OVERVIEW</label>
-                	<textarea placeholder="Lorem ipsum" {...register("overview")} type="text" name="overview" defaultValue={defaultFormData.overview}/>
+                	<textarea 
+                        placeholder="Lorem ipsum" 
+                        type="text" 
+                        name="overview" 
+                        onChange={formik.handleChange}
+                        value={formik.values.overview}
+                    />
                 </div>
                 
                 <div className="col2-3 row5 form-control">
@@ -128,4 +164,3 @@ export default function UpsertMovieModal({header, movie, handleCloseModal}){
         </>
     );
 }
-
