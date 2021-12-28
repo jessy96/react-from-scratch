@@ -22,13 +22,11 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_MOVIES_REQUEST:
-            console.log(FETCH_MOVIES_REQUEST)
             return {
                 ...state,
                 loading: true
             }
         case FETCH_MOVIES_SUCCESS:
-            console.log(FETCH_MOVIES_SUCCESS)
             return  {
                 ...state,
                 loading: false,
@@ -36,7 +34,6 @@ const reducer = (state = initialState, action) => {
                 error: ''
             }
         case MOVIES_REQUEST_FAILURE:
-            console.log(MOVIES_REQUEST_FAILURE)
             return {
                 ...state,
                 loading: false,
