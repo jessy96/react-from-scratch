@@ -56,8 +56,6 @@ export const turnOnMovieInfo = (movieInfo) => {
 export const fetchMovies = () => {
     return (dispatch, getState) => {
         dispatch(fetchMoviesRequest())
-        console.log(getState())
-        console.log(`${MOVIE_BASE_URL}${getState().movie.sortParams}${getState().movie.filterParam}`)
         axios
             .get(`${MOVIE_BASE_URL}${getState().movie.sortParams}${getState().movie.filterParam}`)
             .then(response => {

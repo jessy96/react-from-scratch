@@ -14,15 +14,15 @@
   "author": "Olesia Serban",
   "license": "ISC",
   "dependencies": {
-    "@fortawesome/react-fontawesome": "^0.1.16",
     "axios": "^0.24.0",
     "font-awesome": "^4.7.0",
+    "formik": "^2.2.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hook-form": "^7.21.0",
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
-    "redux-thunk": "^2.4.1"
+    "redux-thunk": "^2.4.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",

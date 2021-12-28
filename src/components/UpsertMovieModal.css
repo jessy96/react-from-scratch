@@ -65,6 +65,7 @@
 .form-input{
 	display: flex;
     flex-direction: column;
+    color: yellow;
 }
 
 .form-input input, .form-input select, .form-input textarea {
