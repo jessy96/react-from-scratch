@@ -1,35 +1,18 @@
 import "./MovieCard.css";
-import React, {useEffect, useRef, useState, Suspense} from "react";
+import React, {Suspense, useContext} from "react";
 import PropTypes from "prop-types";
+import MovieContext from "../services/MoviesContext";
+import { useContextMenu } from "../utils/hooks";
 
 const ContextMenu = React.lazy(()=> import("./ContextMenu"));
 
-
-const  MovieCard = ({movie, name, year, icon, genres}) => {
-    const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
-    const [showContextMenu, setShowContextMenu] = useState(false);
-
-    const closeContextMenu = () => {
-        setShowContextMenu(false)
-    }
-
-    const innerRef = useRef(null);
-    useEffect(() => {
-        function handleContextMenu(event) {
-            event.preventDefault();
-            setAnchorPoint({ x: event.pageX, y: event.pageY });
-            setShowContextMenu(true);
-        }
-        const div = innerRef.current;
-        div.addEventListener("contextmenu", handleContextMenu);    
-        return () => {
-          div.removeEventListener('contextmenu', handleContextMenu);
-        };
-      }, []);
+const  MovieCard = function({movie, name, icon, year, genres}){
+    const contextValue = useContext(MovieContext);
+    const [showContextMenu, toggleContextMenu, anchorPoint, innerRef] = useContextMenu()
 
     return (
         <>
-            <div className="movie-card" ref={innerRef}>
+            <div className="movie-card" ref={innerRef} onClick={()=>contextValue.setMovieInfo(movie)}>
                 <img src={require(`../static/images/movies/${icon}`)}/>
                 <div className="movie-card-info">
                     <div className="movie-card-name">{name}</div>
@@ -41,7 +24,7 @@ const  MovieCard = ({movie, name, year, icon, genres}) => {
             </div>
             <Suspense fallback={<div className="error">Loading...</div>}>
                 <ContextMenu show={showContextMenu} 
-                    handleClose={closeContextMenu} 
+                    handleClose={toggleContextMenu} 
                     anchorPoint={anchorPoint}
                     movie={movie}/>
             </Suspense>
