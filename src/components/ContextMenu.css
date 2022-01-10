@@ -1,0 +1,28 @@
+.context{
+    background: #232323;
+    border-radius: 2px;
+    padding: 5px 0 5px 0;
+    width: 8%;
+    height: auto;
+    margin: 0;
+    position: absolute;
+    opacity: 1;
+    transition: opacity 0.5s linear;
+}
+.context-menu{
+    display: flex;
+    flex-direction: column;
+}
+.context-menu button{
+    background: transparent;
+    border: none;
+    color: white;
+    text-align: left;
+    text-indent: 3%;
+    font-size: 1em;
+}
+
+.context-menu button:hover{
+    background: #F65261;
+    border: none;
+}

@@ -1,9 +1,10 @@
 import "./ResultsFilter.css";
 import React from "react";
-import { getFirstGenres } from "../services/GenreService";
+import GenresRepo from "../services/GenreRepo";
 
 export default function ResultsFilter(props){
-    const genres = getFirstGenres(5);
+    const genreRepo = new GenresRepo();
+    const genres = genreRepo.getFirstGenres(5);
     return (
         <div className="result-filter">
             {genres.map((genre)=>(
